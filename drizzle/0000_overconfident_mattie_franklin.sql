@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS "ekakeru_accounts" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "ekakeru_event_enrollment_rounds" (
 	"id" text PRIMARY KEY NOT NULL,
-	"createdById" text NOT NULL,
-	"eventId" text NOT NULL,
+	"created_by_id" text NOT NULL,
+	"event_id" text NOT NULL,
 	"platform" "platform" NOT NULL,
 	"name" text NOT NULL,
 	"metadata" jsonb NOT NULL
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS "ekakeru_event_enrollment_rounds" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "ekakeru_events" (
 	"id" text PRIMARY KEY NOT NULL,
-	"createdById" text NOT NULL,
+	"created_by_id" text NOT NULL,
 	"name" text NOT NULL,
 	"metadata" jsonb NOT NULL
 );
@@ -43,10 +43,10 @@ CREATE TABLE IF NOT EXISTS "ekakeru_sessions" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "ekakeru_submissions" (
 	"id" text PRIMARY KEY NOT NULL,
-	"createdById" text NOT NULL,
-	"enrollmentRoundId" text NOT NULL,
+	"created_by_id" text NOT NULL,
+	"enrollment_round_id" text NOT NULL,
 	"trustworthiness" integer NOT NULL,
-	"trustworthyPostures" jsonb NOT NULL,
+	"trustworthy_postures" jsonb NOT NULL,
 	"payload" jsonb NOT NULL
 );
 --> statement-breakpoint
@@ -72,19 +72,19 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "ekakeru_event_enrollment_rounds" ADD CONSTRAINT "ekakeru_event_enrollment_rounds_createdById_ekakeru_users_id_fk" FOREIGN KEY ("createdById") REFERENCES "public"."ekakeru_users"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "ekakeru_event_enrollment_rounds" ADD CONSTRAINT "ekakeru_event_enrollment_rounds_created_by_id_ekakeru_users_id_fk" FOREIGN KEY ("created_by_id") REFERENCES "public"."ekakeru_users"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "ekakeru_event_enrollment_rounds" ADD CONSTRAINT "ekakeru_event_enrollment_rounds_eventId_ekakeru_events_id_fk" FOREIGN KEY ("eventId") REFERENCES "public"."ekakeru_events"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "ekakeru_event_enrollment_rounds" ADD CONSTRAINT "ekakeru_event_enrollment_rounds_event_id_ekakeru_events_id_fk" FOREIGN KEY ("event_id") REFERENCES "public"."ekakeru_events"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "ekakeru_events" ADD CONSTRAINT "ekakeru_events_createdById_ekakeru_users_id_fk" FOREIGN KEY ("createdById") REFERENCES "public"."ekakeru_users"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "ekakeru_events" ADD CONSTRAINT "ekakeru_events_created_by_id_ekakeru_users_id_fk" FOREIGN KEY ("created_by_id") REFERENCES "public"."ekakeru_users"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -96,13 +96,13 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "ekakeru_submissions" ADD CONSTRAINT "ekakeru_submissions_createdById_ekakeru_users_id_fk" FOREIGN KEY ("createdById") REFERENCES "public"."ekakeru_users"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "ekakeru_submissions" ADD CONSTRAINT "ekakeru_submissions_created_by_id_ekakeru_users_id_fk" FOREIGN KEY ("created_by_id") REFERENCES "public"."ekakeru_users"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "ekakeru_submissions" ADD CONSTRAINT "ekakeru_submissions_enrollmentRoundId_ekakeru_event_enrollment_rounds_id_fk" FOREIGN KEY ("enrollmentRoundId") REFERENCES "public"."ekakeru_event_enrollment_rounds"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "ekakeru_submissions" ADD CONSTRAINT "ekakeru_submissions_enrollment_round_id_ekakeru_event_enrollment_rounds_id_fk" FOREIGN KEY ("enrollment_round_id") REFERENCES "public"."ekakeru_event_enrollment_rounds"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

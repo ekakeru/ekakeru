@@ -1,5 +1,5 @@
 {
-  "id": "3c0f0c7d-ffc5-4e38-8cb5-e5f1e745b466",
+  "id": "15302a96-2714-47df-b2f4-e5a5f7679b1f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -128,14 +128,14 @@
           "primaryKey": true,
           "notNull": true
         },
-        "createdById": {
-          "name": "createdById",
+        "created_by_id": {
+          "name": "created_by_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "eventId": {
-          "name": "eventId",
+        "event_id": {
+          "name": "event_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -162,12 +162,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "ekakeru_event_enrollment_rounds_createdById_ekakeru_users_id_fk": {
-          "name": "ekakeru_event_enrollment_rounds_createdById_ekakeru_users_id_fk",
+        "ekakeru_event_enrollment_rounds_created_by_id_ekakeru_users_id_fk": {
+          "name": "ekakeru_event_enrollment_rounds_created_by_id_ekakeru_users_id_fk",
           "tableFrom": "ekakeru_event_enrollment_rounds",
           "tableTo": "ekakeru_users",
           "columnsFrom": [
-            "createdById"
+            "created_by_id"
           ],
           "columnsTo": [
             "id"
@@ -175,12 +175,12 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "ekakeru_event_enrollment_rounds_eventId_ekakeru_events_id_fk": {
-          "name": "ekakeru_event_enrollment_rounds_eventId_ekakeru_events_id_fk",
+        "ekakeru_event_enrollment_rounds_event_id_ekakeru_events_id_fk": {
+          "name": "ekakeru_event_enrollment_rounds_event_id_ekakeru_events_id_fk",
           "tableFrom": "ekakeru_event_enrollment_rounds",
           "tableTo": "ekakeru_events",
           "columnsFrom": [
-            "eventId"
+            "event_id"
           ],
           "columnsTo": [
             "id"
@@ -202,8 +202,8 @@
           "primaryKey": true,
           "notNull": true
         },
-        "createdById": {
-          "name": "createdById",
+        "created_by_id": {
+          "name": "created_by_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -223,12 +223,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "ekakeru_events_createdById_ekakeru_users_id_fk": {
-          "name": "ekakeru_events_createdById_ekakeru_users_id_fk",
+        "ekakeru_events_created_by_id_ekakeru_users_id_fk": {
+          "name": "ekakeru_events_created_by_id_ekakeru_users_id_fk",
           "tableFrom": "ekakeru_events",
           "tableTo": "ekakeru_users",
           "columnsFrom": [
-            "createdById"
+            "created_by_id"
           ],
           "columnsTo": [
             "id"
@@ -308,14 +308,14 @@
           "primaryKey": true,
           "notNull": true
         },
-        "createdById": {
-          "name": "createdById",
+        "created_by_id": {
+          "name": "created_by_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "enrollmentRoundId": {
-          "name": "enrollmentRoundId",
+        "enrollment_round_id": {
+          "name": "enrollment_round_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -326,8 +326,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "trustworthyPostures": {
-          "name": "trustworthyPostures",
+        "trustworthy_postures": {
+          "name": "trustworthy_postures",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": true
@@ -341,12 +341,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "ekakeru_submissions_createdById_ekakeru_users_id_fk": {
-          "name": "ekakeru_submissions_createdById_ekakeru_users_id_fk",
+        "ekakeru_submissions_created_by_id_ekakeru_users_id_fk": {
+          "name": "ekakeru_submissions_created_by_id_ekakeru_users_id_fk",
           "tableFrom": "ekakeru_submissions",
           "tableTo": "ekakeru_users",
           "columnsFrom": [
-            "createdById"
+            "created_by_id"
           ],
           "columnsTo": [
             "id"
@@ -354,12 +354,12 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "ekakeru_submissions_enrollmentRoundId_ekakeru_event_enrollment_rounds_id_fk": {
-          "name": "ekakeru_submissions_enrollmentRoundId_ekakeru_event_enrollment_rounds_id_fk",
+        "ekakeru_submissions_enrollment_round_id_ekakeru_event_enrollment_rounds_id_fk": {
+          "name": "ekakeru_submissions_enrollment_round_id_ekakeru_event_enrollment_rounds_id_fk",
           "tableFrom": "ekakeru_submissions",
           "tableTo": "ekakeru_event_enrollment_rounds",
           "columnsFrom": [
-            "enrollmentRoundId"
+            "enrollment_round_id"
           ],
           "columnsTo": [
             "id"

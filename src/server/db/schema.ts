@@ -38,7 +38,7 @@ export const events = createTable("events", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId("evt")),
-  createdById: text("createdById")
+  createdById: text("created_by_id")
     .references(() => users.id, { onDelete: "no action" })
     .notNull(),
   name: text("name").notNull(),
@@ -63,10 +63,10 @@ export const eventEnrollmentRounds = createTable("event_enrollment_rounds", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId("erd")),
-  createdById: text("createdById")
+  createdById: text("created_by_id")
     .references(() => users.id, { onDelete: "no action" })
     .notNull(),
-  eventId: text("eventId")
+  eventId: text("event_id")
     .references(() => events.id, { onDelete: "no action" })
     .notNull(),
   platform: platformEnum("platform").notNull(),
@@ -79,10 +79,10 @@ export const submissions = createTable("submissions", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId("sub")),
-  createdById: text("createdById")
+  createdById: text("created_by_id")
     .references(() => users.id, { onDelete: "no action" })
     .notNull(),
-  enrollmentRoundId: text("enrollmentRoundId")
+  enrollmentRoundId: text("enrollment_round_id")
     .references(() => eventEnrollmentRounds.id, { onDelete: "no action" })
     .notNull(),
 
@@ -95,7 +95,7 @@ export const submissions = createTable("submissions", {
    * Currently trustworthiness is a number between 0 and 100.
    */
   trustworthiness: integer("trustworthiness").notNull(),
-  trustworthyPostures: jsonb("trustworthyPostures").notNull(),
+  trustworthyPostures: jsonb("trustworthy_postures").notNull(),
   payload: jsonb("payload").notNull(),
 });
 
