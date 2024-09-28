@@ -64,6 +64,9 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.EKAKERU_AUTH_GOOGLE_CLIENT_SECRET,
     }),
   ],
+  pages: {
+    signIn: "/auth/login",
+  },
 };
 
 /**

@@ -1,8 +1,12 @@
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
-import { events } from "@/server/db/schema";
-import { asc, desc, gt, lt } from "drizzle-orm";
+import { eventEnrollmentRounds, events } from "@/server/db/schema";
+import { asc, desc, eq, gt, lt } from "drizzle-orm";
+
+type ListEventsOutput = typeof events.$inferSelect & {
+  enrollmentRounds: (typeof eventEnrollmentRounds.$inferSelect)[];
+};
 
 export const eventRouter = createTRPCRouter({
   list: publicProcedure
@@ -14,9 +18,13 @@ export const eventRouter = createTRPCRouter({
       }),
     )
     .query(async ({ ctx, input }) => {
-      return await ctx.db
+      const rows = await ctx.db
         .select()
         .from(events)
+        .innerJoin(
+          eventEnrollmentRounds,
+          eq(events.id, eventEnrollmentRounds.eventId),
+        )
         .where(
           input.cursor
             ? input.order === "asc"
@@ -26,5 +34,18 @@ export const eventRouter = createTRPCRouter({
         )
         .limit(input.limit)
         .orderBy(input.order === "asc" ? asc(events.id) : desc(events.id));
+
+      return rows.reduce<ListEventsOutput[]>((acc, row) => {
+        const event = acc.find((e) => e.id === row.events.id);
+        if (event) {
+          event.enrollmentRounds.push(row.event_enrollment_rounds);
+        } else {
+          acc.push({
+            ...row.events,
+            enrollmentRounds: [row.event_enrollment_rounds],
+          });
+        }
+        return acc;
+      }, [] as ListEventsOutput[]);
     }),
 });
