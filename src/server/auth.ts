@@ -1,4 +1,5 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import crypto from "crypto";
 import {
   getServerSession,
   type DefaultSession,
@@ -43,6 +44,11 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+  session: {
+    generateSessionToken() {
+      return crypto.randomBytes(48).toString('base64url');
+    },
+  },
   callbacks: {
     session: ({ session, user }) => ({
       ...session,
