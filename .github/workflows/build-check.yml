@@ -1,13 +1,13 @@
 name: Build Docker Image (Check)
 
 on:
-  # trigger on any pull requests
-  pull_request:
+  # trigger on any branch push
+  push:
     branches:
       - "**"
 
 concurrency:
-  group: ${{ github.ref }}
+  group: check-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
