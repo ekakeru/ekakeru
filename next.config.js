@@ -10,6 +10,7 @@ await import("./src/env.js");
 /** @type {import("next").NextConfig} */
 const config = {
   poweredByHeader: false,
+  output: 'standalone',
   experimental: {
     optimizePackageImports: ["@mantine/core", "@mantine/hooks"],
   },
