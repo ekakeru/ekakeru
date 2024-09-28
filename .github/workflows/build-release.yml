@@ -61,6 +61,7 @@ jobs:
           labels: ${{ steps.docker-meta.outputs.labels }}
           build-args: |
             VERSION=${{ steps.git-meta.outputs.version }}
+            SKIP_ENV_VALIDATION=true
 
       - name: "GitHub: Create Repository Release"
         uses: "marvinpinto/action-automatic-releases@v1.2.1"
