@@ -29,7 +29,7 @@ const modifiedConfig = withSentryConfig(config, {
     finalize: true,
     name: `ekakeru@${process.env.VERSION}`,
     setCommits: {
-      repo: "ekakeru",
+      repo: "ekakeru/ekakeru",
       commit: exec("git rev-parse HEAD").toString().trim(),
     },
     deploy: {
