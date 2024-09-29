@@ -21,7 +21,7 @@ export function LatestEvents() {
           <h2 className="text-2xl font-bold">{event.name}</h2>
           <h3 className="text-lg font-bold">{event.metadata.location}</h3>
 
-          <div className="mt-2 grid grid-cols-3 gap-4">
+          <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {event.enrollmentRounds.map((round) => (
               <Card
                 key={round.id}
