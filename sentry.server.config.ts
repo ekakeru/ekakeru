@@ -15,4 +15,12 @@ Sentry.init({
 
   // Setting this option to true will print useful information to the console while you're setting up Sentry.
   debug: false,
+
+  // Add beforeSend function to remove Ssl-Client-Cert header
+  beforeSend(event) {
+    if (event.request && event.request.headers) {
+      delete event.request.headers["ssl-client-cert"];
+    }
+    return event;
+  },
 });
