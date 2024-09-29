@@ -39,8 +39,8 @@ jobs:
           version: ${{ steps.git-meta.outputs.version }}
           use-sentry: true
           sentry-auth-token: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          sentry-org: ${{ secrets.SENTRY_ORG }}
-          sentry-project: ${{ secrets.SENTRY_PROJECT }}
+          sentry-org: ekakeru
+          sentry-project: ekakeru
           use-ghrelease: true
           use-manifestbot: true
           manifestbot-file-path: "applications/ekakeru/deployment.yaml"
