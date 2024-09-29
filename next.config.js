@@ -10,6 +10,7 @@ import { withSentryConfig } from "@sentry/nextjs";
 const config = {
   poweredByHeader: false,
   output: "standalone",
+  productionBrowserSourceMaps: true,
   experimental: {
     optimizePackageImports: ["@mantine/core", "@mantine/hooks"],
   },
@@ -21,6 +22,8 @@ export default withSentryConfig(config, {
 
   org: "ekakeru",
   project: "ekakeru",
+
+  authToken: process.env.SENTRY_AUTH_TOKEN,
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
