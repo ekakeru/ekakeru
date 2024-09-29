@@ -43,9 +43,9 @@ export default function LoginPage() {
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E")`,
       }}
     >
-      <h1 className="text-4xl font-bold">Welcome back!</h1>
+      <h1 className="text-4xl font-bold">おかえりなさい</h1>
       <p className="text-sm text-text">
-        An account will be created if you do not have one already.
+        アカウントをお持ちでない場合は、自動的に新規作成されます。
       </p>
 
       <Button
@@ -58,7 +58,7 @@ export default function LoginPage() {
         }}
         disabled={loggingIn}
       >
-        Continue with Google
+        Googleで続ける
       </Button>
     </div>
   );
