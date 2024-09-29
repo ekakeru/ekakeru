@@ -26,7 +26,24 @@ export default function RootLayout({
         <SessionAccountMenu />
       </header>
 
-      <main className="h-[calc(100%-4rem)] w-full pt-16">{children}</main>
+      <main className="h-[calc(100%-3rem)] w-full pt-16">{children}</main>
+
+      <footer className="flex h-12 items-center justify-center gap-2">
+        <p className="text-xs opacity-50">
+          イーカケル {process.env.NEXT_PUBLIC_VERSION ?? "v0.0.0"}
+        </p>
+
+        <div className="h-6 w-px bg-zinc-500/10" />
+
+        <Link
+          className="text-xs opacity-50 hover:opacity-80"
+          href="https://github.com/ekakeru/ekakeru"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </Link>
+      </footer>
     </div>
   );
 }
