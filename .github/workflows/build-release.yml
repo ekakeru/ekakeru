@@ -10,17 +10,22 @@ concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: write
-  packages: write
-  id-token: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      packages: write
+      id-token: write
+      attestations: write
+
     steps:
       - name: "Checkout"
         uses: actions/checkout@v4
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3.6.0
 
       - name: "Metadata: Git"
         id: git-meta
@@ -50,8 +55,9 @@ jobs:
       
       - name: "Docker: Build and Push Image"
         id: build-and-push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
+          sbom: true
           push: true
           load: true
           tags: ${{ steps.docker-meta.outputs.tags }}
@@ -60,6 +66,17 @@ jobs:
             VERSION=${{ steps.git-meta.outputs.version }}
           secrets: |
             SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
+
+      - name: "Sign Image: Sign the images with GitHub OIDC Token"
+        env:
+          DIGEST: ${{ steps.build-and-push.outputs.digest }}
+          TAGS: ${{ steps.docker-meta.outputs.tags }}
+        run: |
+          images=""
+          for tag in ${TAGS}; do
+            images+="${tag}@${DIGEST} "
+          done
+          cosign sign --yes ${images}
 
       - name: "Release: Call Dispatcher"
         id: release-dispatcher
