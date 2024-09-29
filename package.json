@@ -11,10 +11,7 @@
     "db:studio": "drizzle-kit studio",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start",
-    "pages:build": "npx @cloudflare/next-on-pages",
-    "preview": "npm run pages:build && wrangler pages dev",
-    "deploy": "npm run pages:build && wrangler pages deploy"
+    "start": "next start"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.1.0",
@@ -40,7 +37,6 @@
     "zod": "^3.23.3"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.3",
     "@types/eslint": "^8.56.10",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",

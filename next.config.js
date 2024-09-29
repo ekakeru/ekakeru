@@ -4,20 +4,13 @@
  */
 await import("./src/env.js");
 
- import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
-
-
 /** @type {import("next").NextConfig} */
 const config = {
   poweredByHeader: false,
-  output: 'standalone',
+  output: "standalone",
   experimental: {
     optimizePackageImports: ["@mantine/core", "@mantine/hooks"],
   },
 };
-
-if (process.env.NODE_ENV === 'development') {
-   await setupDevPlatform();
- }
 
 export default config;
