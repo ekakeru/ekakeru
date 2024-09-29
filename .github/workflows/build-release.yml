@@ -40,11 +40,7 @@ jobs:
         uses: "imgg-devops/actions/release-dispatcher@main"
         with:
           version: ${{ steps.git-meta.outputs.version }}
-          use-sentry: true
-          sentry-auth-token: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          sentry-org: ekakeru
-          sentry-project: ekakeru
-          sentry-environment: production
+          use-sentry: false
           use-ghrelease: true
           use-manifestbot: true
           manifestbot-file-path: "applications/ekakeru/deployment.yaml"

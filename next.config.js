@@ -23,8 +23,12 @@ const modifiedConfig = withSentryConfig(config, {
   project: "ekakeru",
 
   release: {
-    create: false,
+    create: true,
+    finalize: true,
     name: `ekakeru@${process.env.VERSION}`,
+    setCommits: {
+      auto: true,
+    },
     deploy: {
       env: process.env.NODE_ENV,
     },
