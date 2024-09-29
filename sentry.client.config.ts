@@ -10,6 +10,8 @@ Sentry.init({
   release: `ekakeru@${process.env.NEXT_PUBLIC_VERSION}`,
   environment: process.env.NODE_ENV,
 
+  enabled: process.env.NODE_ENV !== "development",
+
   // Add optional integrations for additional features
   integrations: [Sentry.replayIntegration()],
 

@@ -3,10 +3,7 @@ import { getServerAuthSession } from "@/server/auth";
 import "@/styles/globals.css";
 import { TRPCReactProvider } from "@/trpc/react";
 import { HydrateClient } from "@/trpc/server";
-import { ColorSchemeScript, MantineProvider } from "@mantine/core";
-import "@mantine/core/styles.css";
 import { type Metadata } from "next";
-import { theme } from "@/theme";
 
 export const metadata: Metadata = {
   title: "イーカケル",
@@ -21,14 +18,12 @@ export default async function RootLayout({
   return (
     <html lang="ja" className="size-full">
       <head>
-        <ColorSchemeScript />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className="size-full">
         <TRPCReactProvider>
           <SessionProvider session={session}>
-            <MantineProvider theme={theme}>
-              <HydrateClient>{children}</HydrateClient>
-            </MantineProvider>
+            <HydrateClient>{children}</HydrateClient>
           </SessionProvider>
         </TRPCReactProvider>
       </body>

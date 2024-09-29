@@ -10,6 +10,8 @@ Sentry.init({
   release: `ekakeru@${process.env.VERSION}`,
   environment: process.env.NODE_ENV,
 
+  enabled: process.env.NODE_ENV !== "development",
+
   // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
   tracesSampleRate: 1,
 

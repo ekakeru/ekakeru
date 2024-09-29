@@ -1,7 +1,7 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { api } from "@/trpc/react";
-import { Button, Group, Paper } from "@mantine/core";
 import Link from "next/link";
 
 export function LatestEvents() {
@@ -16,18 +16,17 @@ export function LatestEvents() {
   return (
     <div className="size-full">
       {flattened.length ? (
-        <ul className="grid gap-md">
+        <ul className="grid gap-6">
           {flattened.map((event) => (
-            <li key={event.id} className="flex flex-col items-start gap-sm">
+            <li key={event.id} className="flex flex-col items-start gap-4">
               <h2 className="text-2xl font-bold">{event.name}</h2>
               <h3 className="text-lg font-bold">{event.metadata.location}</h3>
 
-              <Group mt="md" className="grid grid-cols-3 gap-sm">
+              <div className="mt-2 grid grid-cols-3 gap-4">
                 {event.enrollmentRounds.map((round) => (
-                  <Paper
-                    withBorder
+                  <div
                     key={round.id}
-                    className="flex w-full flex-col items-start p-md"
+                    className="flex w-full flex-col items-start rounded border p-6"
                   >
                     <div className="text-lg font-bold">{round.name}</div>
                     <div className="font-mono text-sm text-text">
@@ -38,27 +37,24 @@ export function LatestEvents() {
                       {round.metadata.milestones.enrollment.end}
                     </div>
 
-                    <div className="mt-sm flex items-center justify-start gap-xs">
-                      <Button
-                        variant="filled"
-                        component={Link}
-                        href={`/events/${event.id}/rounds/${round.id}/submission/create`}
-                      >
-                        Start submission
+                    <div className="mt-4 flex items-center justify-start gap-2">
+                      <Button variant="default" asChild>
+                        <Link
+                          href={`/events/${event.id}/rounds/${round.id}/submission/create`}
+                        >
+                          Start submission
+                        </Link>
                       </Button>
 
-                      <Button
-                        color="gray"
-                        variant="light"
-                        component={Link}
-                        href={`/events/${event.id}/rounds/${round.id}`}
-                      >
-                        Learn more
+                      <Button variant="secondary" asChild>
+                        <Link href={`/events/${event.id}/rounds/${round.id}`}>
+                          Learn more
+                        </Link>
                       </Button>
                     </div>
-                  </Paper>
+                  </div>
                 ))}
-              </Group>
+              </div>
 
               <p>{event.metadata.description}</p>
             </li>

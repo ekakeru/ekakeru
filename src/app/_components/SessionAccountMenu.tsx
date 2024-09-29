@@ -1,81 +1,65 @@
 "use client";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
-  ActionIcon,
-  Avatar,
-  Button,
-  Group,
-  Menu,
-  rem,
-  Text,
-} from "@mantine/core";
-import { IconLogout } from "@tabler/icons-react";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { signIn, signOut, useSession } from "next-auth/react";
+import MdiLogin from "~icons/mdi/login";
+import MdiLogout from "~icons/mdi/logout";
 
 export function SessionAccountMenu() {
   const { data: session } = useSession();
 
   return session === null ? (
-    <Button onClick={() => signIn()} variant="light">
+    <Button onClick={() => signIn()} variant="outline">
+      <MdiLogin />
       Login
     </Button>
   ) : (
-    <Group justify="center">
-      <Menu
-        withArrow
-        width={300}
-        position="bottom"
-        transitionProps={{ transition: "pop" }}
-        withinPortal
-      >
-        <Menu.Target>
-          <ActionIcon variant="default">
-            <Avatar radius="xl" src={session?.user?.image} />
-          </ActionIcon>
-        </Menu.Target>
-        <Menu.Dropdown>
-          <Menu.Item>
-            <Group>
-              <Avatar radius="xl" src={session?.user?.image} />
+    <div className="flex justify-center">
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Button size="icon">
+            <AvatarImage src={session?.user?.image ?? undefined} />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>
+            <div className="flex items-center gap-2">
+              <Avatar>
+                <AvatarImage src={session?.user?.image ?? undefined} />
+                <AvatarFallback>
+                  {session?.user?.name?.slice(0, 2)}
+                </AvatarFallback>
+              </Avatar>
 
               <div>
-                <Text fw={500}>{session?.user?.name}</Text>
-                <Text size="xs" c="dimmed">
+                <div className="font-medium">{session?.user?.name}</div>
+                <div className="text-muted-foreground text-xs">
                   {session?.user?.email}
-                </Text>
+                </div>
               </div>
-            </Group>
-          </Menu.Item>
+            </div>
+          </DropdownMenuItem>
 
-          <Menu.Divider />
+          <DropdownMenuSeparator />
 
-          {/* <Menu.Label>Settings</Menu.Label> */}
-          {/* <Menu.Item
-            leftSection={
-              <IconSettings
-                style={{ width: rem(16), height: rem(16) }}
-                stroke={1.5}
-              />
-            }
-          >
-            Account settings
-          </Menu.Item> */}
-          <Menu.Item
+          <DropdownMenuItem
             color="red"
-            leftSection={
-              <IconLogout
-                style={{ width: rem(16), height: rem(16) }}
-                stroke={1.5}
-              />
-            }
             onClick={() => {
               void signOut();
             }}
           >
-            Logout
-          </Menu.Item>
-        </Menu.Dropdown>
-      </Menu>
-    </Group>
+            <MdiLogout />
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 }

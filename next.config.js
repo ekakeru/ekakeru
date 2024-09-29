@@ -5,13 +5,22 @@
 await import("./src/env.js");
 
 import { withSentryConfig } from "@sentry/nextjs";
+import Icons from "unplugin-icons/webpack";
 
 /** @type {import("next").NextConfig} */
 const config = {
   poweredByHeader: false,
   output: "standalone",
-  experimental: {
-    optimizePackageImports: ["@mantine/core", "@mantine/hooks"],
+  webpack(config) {
+    config.plugins.push(
+      Icons({
+        compiler: "jsx",
+        jsx: "react",
+        autoInstall: true,
+      }),
+    );
+
+    return config;
   },
 };
 
@@ -67,4 +76,6 @@ export default withSentryConfig(config, {
   // https://docs.sentry.io/product/crons/
   // https://vercel.com/docs/cron-jobs
   automaticVercelMonitors: true,
+
+  telemetry: false,
 });
