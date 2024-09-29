@@ -2,12 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { TimeRange } from "@/server/db/schema";
+import type { TimeRange } from "@/server/db/schema";
 import { api } from "@/trpc/react";
 import { TZDate } from "@date-fns/tz";
 import { format } from "date-fns";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import MdiLocation from "~icons/mdi/location";
+import MdiTextLong from "~icons/mdi/text-long";
 
 // LoadMorePresenceListener listens if itself is in the viewport
 // and calls onShouldLoadMore if it is. It should ensure it is only called once,
@@ -83,47 +85,60 @@ export function LatestEvents() {
   const flattened = query.pages.flatMap((page) => page);
 
   return flattened.length ? (
-    <ul className="grid gap-6">
+    <ul className="flex min-h-[80vh] w-full flex-col gap-6">
       {flattened.map((event) => (
-        <li key={event.id} className="flex flex-col items-start gap-4">
+        <Card key={event.id} className="flex flex-col items-start gap-2 p-4">
           <h2 className="text-2xl font-bold">{event.name}</h2>
-          <h3 className="text-lg font-bold">{event.metadata.location}</h3>
 
-          <div className="mt-2 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="flex items-center gap-2">
+            <MdiLocation className="inline-block opacity-50" />
+            <p>{event.metadata.location}</p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <MdiTextLong className="inline-block opacity-50" />
+            <p>{event.metadata.description}</p>
+          </div>
+
+          <h3 className="mt-4 text-lg font-bold">抽選申込の結果</h3>
+
+          <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {event.enrollmentRounds.map((round) => (
               <Card
                 key={round.id}
-                className="flex w-full flex-col items-start rounded border p-6"
+                className="flex w-full flex-col items-start gap-1 rounded border p-4"
               >
-                <div className="text-lg font-bold">{round.name}</div>
-                <div className="font-mono text-sm text-text">
-                  {round.platform}
+                <div className="flex w-full flex-wrap items-center">
+                  <div className="text-lg font-bold">{round.name}</div>
+                  <div className="flex-1" />
+                  <div className="text-muted-foreground font-mono text-sm">
+                    {round.platform}
+                  </div>
                 </div>
-                <div className="mt-2 text-sm">
+
+                <div className="text-sm">
                   <TimeRange timeRange={round.metadata.milestones.enrollment} />
                 </div>
 
-                <div className="mt-4 flex items-center justify-start gap-2">
+                <div className="mt-2 flex items-center justify-start gap-2">
                   <Button variant="default" asChild>
                     <Link
                       href={`/events/${event.id}/rounds/${round.id}/submission/create`}
                     >
-                      Start submission
+                      報告する
                     </Link>
                   </Button>
 
                   <Button variant="secondary" asChild>
                     <Link href={`/events/${event.id}/rounds/${round.id}`}>
-                      Learn more
+                      結果を見る
                     </Link>
                   </Button>
                 </div>
               </Card>
             ))}
           </div>
-
-          <p>{event.metadata.description}</p>
-        </li>
+        </Card>
       ))}
     </ul>
   ) : (
