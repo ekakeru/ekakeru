@@ -2,8 +2,76 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { TimeRange } from "@/server/db/schema";
 import { api } from "@/trpc/react";
+import { TZDate } from "@date-fns/tz";
+import { format } from "date-fns";
 import Link from "next/link";
+import { useEffect, useRef } from "react";
+
+// LoadMorePresenceListener listens if itself is in the viewport
+// and calls onShouldLoadMore if it is. It should ensure it is only called once,
+// as new instances will be created when new pages are loaded.
+function LoadMorePresenceListener({
+  onShouldLoadMore,
+}: {
+  onShouldLoadMore: () => void;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (element) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              onShouldLoadMore();
+            }
+          });
+        },
+        {
+          root: null,
+          threshold: 0.5,
+        },
+      );
+
+      observer.observe(element);
+    }
+  }, [onShouldLoadMore]);
+
+  return <div ref={ref} />;
+}
+
+function TimeRange({ timeRange }: { timeRange: TimeRange }) {
+  const start = new TZDate(timeRange.start, "Asia/Tokyo");
+  const end = new TZDate(timeRange.end, "Asia/Tokyo");
+
+  const startYear = start.getFullYear();
+  const endYear = end.getFullYear();
+
+  if (startYear !== endYear) {
+    return (
+      <>
+        <Date date={start}>{format(start, "yyyy-MM-dd HH:mm")}</Date>
+        <span>~</span>
+        <Date date={end}>{format(end, "yyyy-MM-dd HH:mm")}</Date>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Date date={start}>{format(start, "MM-dd HH:mm")}</Date>
+        <span> ~ </span>
+        <Date date={end}>{format(end, "MM-dd HH:mm")}</Date>
+      </>
+    );
+  }
+}
+
+function Date({ date, children }: { date: Date; children: React.ReactNode }) {
+  return <time dateTime={date.toISOString()}>{children}</time>;
+}
 
 export function LatestEvents() {
   const [query] = api.event.list.useSuspenseInfiniteQuery(
@@ -21,7 +89,7 @@ export function LatestEvents() {
           <h2 className="text-2xl font-bold">{event.name}</h2>
           <h3 className="text-lg font-bold">{event.metadata.location}</h3>
 
-          <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-2 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {event.enrollmentRounds.map((round) => (
               <Card
                 key={round.id}
@@ -32,8 +100,7 @@ export function LatestEvents() {
                   {round.platform}
                 </div>
                 <div className="mt-2 text-sm">
-                  {round.metadata.milestones.enrollment.start} ~{" "}
-                  {round.metadata.milestones.enrollment.end}
+                  <TimeRange timeRange={round.metadata.milestones.enrollment} />
                 </div>
 
                 <div className="mt-4 flex items-center justify-start gap-2">
@@ -60,6 +127,6 @@ export function LatestEvents() {
       ))}
     </ul>
   ) : (
-    <p>There are no events yet.</p>
+    <p>ただいま、イベントはありません。</p>
   );
 }
