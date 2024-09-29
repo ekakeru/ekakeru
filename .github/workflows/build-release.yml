@@ -32,6 +32,8 @@ jobs:
         with:
           version: ${{ steps.git-meta.outputs.version }}
           repository: "ekakeru/ekakeru"
+          build-args: |
+            SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: "Release: Call Dispatcher"
         id: release-dispatcher
