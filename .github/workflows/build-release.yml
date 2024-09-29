@@ -58,7 +58,7 @@ jobs:
           labels: ${{ steps.docker-meta.outputs.labels }}
           build-args: |
             VERSION=${{ steps.git-meta.outputs.version }}
-          secrets:
+          secrets: |
             SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: "Release: Call Dispatcher"
