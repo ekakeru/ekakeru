@@ -59,7 +59,7 @@ jobs:
           build-args: |
             VERSION=${{ steps.git-meta.outputs.version }}
           secrets: |
-            SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+            SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: "Release: Call Dispatcher"
         id: release-dispatcher
