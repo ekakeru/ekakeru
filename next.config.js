@@ -16,7 +16,7 @@ const config = {
   },
 };
 
-export default withSentryConfig(config, {
+const modifiedConfig = withSentryConfig(config, {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
@@ -24,9 +24,6 @@ export default withSentryConfig(config, {
   project: "ekakeru",
 
   authToken: process.env.SENTRY_AUTH_TOKEN,
-
-  // Only print logs for uploading source maps in CI
-  silent: !process.env.CI,
 
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
@@ -51,9 +48,15 @@ export default withSentryConfig(config, {
   // Automatically tree-shake Sentry logger statements to reduce bundle size
   disableLogger: true,
 
+  debug: true,
+
   // Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
   // See the following for more information:
   // https://docs.sentry.io/product/crons/
   // https://vercel.com/docs/cron-jobs
   automaticVercelMonitors: true,
 });
+
+console.log(modifiedConfig);
+
+export default modifiedConfig;
