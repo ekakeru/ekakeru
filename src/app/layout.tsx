@@ -1,4 +1,5 @@
 import SessionProvider from "@/app/_components/providers/SessionProvider";
+import { ThemeProvider } from "@/app/_components/providers/ThemeProvider";
 import { getServerAuthSession } from "@/server/auth";
 import "@/styles/globals.css";
 import { TRPCReactProvider } from "@/trpc/react";
@@ -16,14 +17,16 @@ export default async function RootLayout({
   const session = await getServerAuthSession();
 
   return (
-    <html lang="ja" className="size-full">
+    <html lang="ja" className="size-full" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className="size-full">
         <TRPCReactProvider>
           <SessionProvider session={session}>
-            <HydrateClient>{children}</HydrateClient>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <HydrateClient>{children}</HydrateClient>
+            </ThemeProvider>
           </SessionProvider>
         </TRPCReactProvider>
       </body>

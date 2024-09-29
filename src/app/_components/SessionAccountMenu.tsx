@@ -5,61 +5,56 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { signIn, signOut, useSession } from "next-auth/react";
 import MdiLogin from "~icons/mdi/login";
-import MdiLogout from "~icons/mdi/logout";
 
 export function SessionAccountMenu() {
   const { data: session } = useSession();
 
   return session === null ? (
-    <Button onClick={() => signIn()} variant="outline">
-      <MdiLogin />
+    <Button onClick={() => signIn()} variant="outline" leftIcon={<MdiLogin />}>
       Login
     </Button>
   ) : (
-    <div className="flex justify-center">
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <Button size="icon">
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <img
+          src={session?.user?.image ?? undefined}
+          className="size-9 overflow-hidden rounded"
+          alt={session?.user?.name ?? undefined}
+        />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuLabel className="flex items-center gap-2 p-2">
+          <Avatar>
             <AvatarImage src={session?.user?.image ?? undefined} />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem>
-            <div className="flex items-center gap-2">
-              <Avatar>
-                <AvatarImage src={session?.user?.image ?? undefined} />
-                <AvatarFallback>
-                  {session?.user?.name?.slice(0, 2)}
-                </AvatarFallback>
-              </Avatar>
+            <AvatarFallback>{session?.user?.name?.slice(0, 2)}</AvatarFallback>
+          </Avatar>
 
-              <div>
-                <div className="font-medium">{session?.user?.name}</div>
-                <div className="text-muted-foreground text-xs">
-                  {session?.user?.email}
-                </div>
-              </div>
+          <div>
+            <div className="font-medium">{session?.user?.name}</div>
+            <div className="text-muted-foreground text-xs">
+              {session?.user?.email}
             </div>
-          </DropdownMenuItem>
+          </div>
+        </DropdownMenuLabel>
 
-          <DropdownMenuSeparator />
+        <DropdownMenuSeparator />
 
-          <DropdownMenuItem
-            color="red"
-            onClick={() => {
-              void signOut();
-            }}
-          >
-            <MdiLogout />
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+        <DropdownMenuItem
+          color="red"
+          onClick={() => {
+            void signOut();
+          }}
+        >
+          Log out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

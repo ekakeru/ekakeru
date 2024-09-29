@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Center, Container, Text, Title } from "@mantine/core";
+import { Button } from "@/components/ui/button";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 
@@ -37,35 +37,29 @@ export default function LoginPage() {
   const [loggingIn, setLoggingIn] = useState(false);
 
   return (
-    <Center
-      className="size-full"
+    <div
+      className="flex size-full flex-col items-center justify-center gap-4 p-8"
       style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E")`,
       }}
     >
-      <Container size="xl">
-        <Title ta="center" className="font-black">
-          Welcome back!
-        </Title>
-        <Text c="dimmed" size="sm" ta="center" mt={5}>
-          An account will be created if you do not have one already.
-        </Text>
+      <h1 className="text-4xl font-bold">Welcome back!</h1>
+      <p className="text-sm text-text">
+        An account will be created if you do not have one already.
+      </p>
 
-        <Button
-          fullWidth
-          leftSection={<GoogleIcon />}
-          size="xl"
-          variant="default"
-          mt={20}
-          onClick={() => {
-            void signIn("google", { callbackUrl: "/" });
-            setLoggingIn(true);
-          }}
-          loading={loggingIn}
-        >
-          Continue with Google
-        </Button>
-      </Container>
-    </Center>
+      <Button
+        leftIcon={<GoogleIcon />}
+        size="lg"
+        variant="outline"
+        onClick={() => {
+          void signIn("google", { callbackUrl: "/" });
+          setLoggingIn(true);
+        }}
+        disabled={loggingIn}
+      >
+        Continue with Google
+      </Button>
+    </div>
   );
 }

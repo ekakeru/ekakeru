@@ -33,6 +33,7 @@
     "lucide-react": "^0.446.0",
     "next": "^14.2.4",
     "next-auth": "^4.24.7",
+    "next-themes": "^0.3.0",
     "postgres": "^3.4.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -44,6 +45,7 @@
     "zod": "^3.23.3"
   },
   "devDependencies": {
+    "@iconify-json/line-md": "^1.2.1",
     "@iconify-json/mdi": "^1.2.0",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
