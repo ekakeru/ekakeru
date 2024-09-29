@@ -4,8 +4,6 @@
  */
 await import("./src/env.js");
 
-import { execSync } from "child_process";
-
 import { withSentryConfig } from "@sentry/nextjs";
 
 /** @type {import("next").NextConfig} */
@@ -28,11 +26,6 @@ const modifiedConfig = withSentryConfig(config, {
     create: true,
     finalize: true,
     name: `ekakeru@${process.env.VERSION}`,
-    setCommits: {
-      auto: false,
-      repo: "https://github.com/ekakeru/ekakeru.git",
-      commit: execSync("git rev-parse HEAD").toString("utf-8").trim(),
-    },
     deploy: {
       env: process.env.NODE_ENV,
     },
