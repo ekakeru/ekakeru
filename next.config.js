@@ -22,6 +22,18 @@ const modifiedConfig = withSentryConfig(config, {
   org: "ekakeru",
   project: "ekakeru",
 
+  release: {
+    create: false,
+    name: `ekakeru@${process.env.VERSION}`,
+    deploy: {
+      env: process.env.NODE_ENV,
+    },
+  },
+
+  sourcemaps: {
+    deleteSourcemapsAfterUpload: true,
+  },
+
   authToken: process.env.SENTRY_AUTH_TOKEN,
 
   // For all available options, see:
