@@ -1,4 +1,5 @@
 FROM node:22-alpine AS base
+ARG VERSION
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -15,7 +16,6 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
-
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
@@ -27,6 +27,7 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV SKIP_ENV_VALIDATION=1
+ENV NEXT_PUBLIC_VERSION=$VERSION
 
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
@@ -64,6 +65,8 @@ USER nextjs
 EXPOSE 3000
 
 ENV PORT=3000
+
+ENV VERSION=$VERSION
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
