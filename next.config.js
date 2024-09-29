@@ -10,7 +10,6 @@ import { withSentryConfig } from "@sentry/nextjs";
 const config = {
   poweredByHeader: false,
   output: "standalone",
-  productionBrowserSourceMaps: true,
   experimental: {
     optimizePackageImports: ["@mantine/core", "@mantine/hooks"],
   },
