@@ -51,3 +51,12 @@ src/scripts
 
 # Sentry Config File
 .env.sentry-build-plugin
+
+
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
