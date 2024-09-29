@@ -1,6 +1,6 @@
 FROM node:22-alpine AS base
 ARG VERSION
-ARG SENTRY_AUTH_TOKEN
+ENV CI=true
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -20,7 +20,6 @@ RUN \
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
-RUN apk add --no-cache git
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
@@ -30,9 +29,8 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV SKIP_ENV_VALIDATION=1
 ENV NEXT_PUBLIC_VERSION=$VERSION
-ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 
-RUN \
+RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN,env=SENTRY_AUTH_TOKEN \
   if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run build; \
   elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \

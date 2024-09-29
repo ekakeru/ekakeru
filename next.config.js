@@ -15,12 +15,14 @@ const config = {
   },
 };
 
-const modifiedConfig = withSentryConfig(config, {
+export default withSentryConfig(config, {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
   org: "ekakeru",
   project: "ekakeru",
+
+  silent: !process.env.CI,
 
   release: {
     create: true,
@@ -60,15 +62,9 @@ const modifiedConfig = withSentryConfig(config, {
   // Automatically tree-shake Sentry logger statements to reduce bundle size
   disableLogger: true,
 
-  debug: true,
-
   // Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
   // See the following for more information:
   // https://docs.sentry.io/product/crons/
   // https://vercel.com/docs/cron-jobs
   automaticVercelMonitors: true,
 });
-
-console.log(modifiedConfig);
-
-export default modifiedConfig;
