@@ -46,7 +46,7 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   session: {
     generateSessionToken() {
-      return crypto.randomBytes(48).toString('base64url');
+      return crypto.randomBytes(48).toString("base64url");
     },
   },
   callbacks: {

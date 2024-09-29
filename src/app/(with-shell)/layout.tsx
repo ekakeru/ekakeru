@@ -6,7 +6,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <AppShell header={{ height: 64 }} padding="sm">
-      <AppShellHeader className="p-sm flex h-16 items-center justify-center">
+      <AppShellHeader className="flex h-16 items-center justify-center p-sm">
         <div>
           <h1 className="rounded bg-zinc-500/10 px-1 py-0.5 text-xl font-semibold tracking-tight">
             イーカケル

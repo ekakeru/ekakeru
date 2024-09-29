@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 
 function GoogleIcon(props: React.ComponentPropsWithoutRef<"svg">) {
-  return ( 
+  return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMidYMid"
