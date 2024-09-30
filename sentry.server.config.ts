@@ -2,15 +2,16 @@
 // The config you add here will be used whenever the server handles a request.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
+import { env } from "@/env";
 import * as Sentry from "@sentry/nextjs";
 
 Sentry.init({
   dsn: "https://fee5cfd9322b1125d704fb6b8241735e@o4508033850998784.ingest.us.sentry.io/4508033876688896",
 
-  release: `ekakeru@${process.env.VERSION}`,
-  environment: process.env.NODE_ENV,
+  release: `ekakeru@${env.VERSION}`,
+  environment: env.NODE_ENV,
 
-  enabled: process.env.NODE_ENV !== "development",
+  enabled: env.NODE_ENV !== "development",
 
   // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
   tracesSampleRate: 1,
@@ -20,7 +21,7 @@ Sentry.init({
 
   // Add beforeSend function to remove Ssl-Client-Cert header
   beforeSend(event) {
-    if (event.request && event.request.headers) {
+    if (event.request?.headers) {
       delete event.request.headers["ssl-client-cert"];
     }
     return event;

@@ -1,5 +1,6 @@
 import { ColorSchemeSwitcher } from "@/app/_components/ColorSchemeSwitcher";
 import { SessionAccountMenu } from "@/app/_components/SessionAccountMenu";
+import { env } from "@/env";
 import Link from "next/link";
 
 export default function RootLayout({
@@ -7,12 +8,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="size-full">
-      <header className="bg-background/50 fixed inset-x-0 top-0 z-10 flex h-16 items-center justify-center gap-2 border-b border-zinc-500/10 px-4 shadow backdrop-blur-sm">
+      <header className="fixed inset-x-0 top-0 z-10 flex h-16 items-center justify-center gap-2 border-b border-zinc-500/10 bg-background/50 px-4 shadow backdrop-blur-sm">
         <Link
           href="/"
           className="flex items-center overflow-hidden rounded bg-zinc-500/10 text-xl font-semibold tracking-tight"
         >
-          <div className="bg-primary size-full h-full px-1 py-0.5 font-light text-white">
+          <div className="size-full h-full bg-primary px-1 py-0.5 font-light text-white">
             <svg
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +43,7 @@ export default function RootLayout({
 
       <footer className="flex h-12 items-center justify-center gap-2">
         <p className="text-xs opacity-50">
-          イーカケル {process.env.NEXT_PUBLIC_VERSION ?? "v0.0.0"}
+          イーカケル {env.NEXT_PUBLIC_VERSION ?? "v0.0.0"}
         </p>
 
         <div className="h-6 w-px bg-zinc-500/10" />

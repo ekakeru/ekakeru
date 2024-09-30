@@ -2,15 +2,16 @@
 // The config you add here will be used whenever a users loads a page in their browser.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
+import { env } from "@/env";
 import * as Sentry from "@sentry/nextjs";
 
 Sentry.init({
   dsn: "https://fee5cfd9322b1125d704fb6b8241735e@o4508033850998784.ingest.us.sentry.io/4508033876688896",
 
-  release: `ekakeru@${process.env.NEXT_PUBLIC_VERSION}`,
-  environment: process.env.NODE_ENV,
+  release: `ekakeru@${env.NEXT_PUBLIC_VERSION}`,
+  environment: env.NODE_ENV,
 
-  enabled: process.env.NODE_ENV !== "development",
+  enabled: env.NODE_ENV !== "development",
 
   // Add optional integrations for additional features
   integrations: [Sentry.replayIntegration()],
