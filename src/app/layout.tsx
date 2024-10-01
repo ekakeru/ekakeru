@@ -1,11 +1,11 @@
 import { PHProvider } from "@/app/_components/providers/PosthogProvider";
 import SessionProvider from "@/app/_components/providers/SessionProvider";
-import { ThemeProvider } from "@/app/_components/providers/ThemeProvider";
 import { getServerAuthSession } from "@/server/auth";
 import "@/styles/globals.css";
 import { TRPCReactProvider } from "@/trpc/react";
 import { HydrateClient } from "@/trpc/server";
 import { type Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import dynamic from "next/dynamic";
 
 const PostHogPageView = dynamic(() => import("./_components/PostHogPageView"), {
@@ -28,20 +28,17 @@ export default async function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className="size-full">
-        <PHProvider>
-          <TRPCReactProvider>
-            <SessionProvider session={session}>
-              <PostHogPageView />
-              <ThemeProvider
-                attribute="class"
-                defaultTheme="system"
-                enableSystem
-              >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <PHProvider>
+            <TRPCReactProvider>
+              <SessionProvider session={session}>
+                <PostHogPageView />
+
                 <HydrateClient>{children}</HydrateClient>
-              </ThemeProvider>
-            </SessionProvider>
-          </TRPCReactProvider>
-        </PHProvider>
+              </SessionProvider>
+            </TRPCReactProvider>
+          </PHProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
