@@ -6,12 +6,14 @@ await import("./src/env.js");
 
 import { withSentryConfig } from "@sentry/nextjs";
 import Icons from "unplugin-icons/webpack";
+import { env } from "./src/env.js";
 
 /** @type {import("next").NextConfig} */
 const config = {
   poweredByHeader: false,
   output: "standalone",
   webpack(config) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     config.plugins.push(
       Icons({
         compiler: "jsx",
@@ -20,8 +22,27 @@ const config = {
       }),
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return config;
   },
+  async rewrites() {
+    return [
+      {
+        source: "/_carrier/seele/static/:path*",
+        destination: "https://us-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/_carrier/seele/:path*",
+        destination: "https://us.i.posthog.com/:path*",
+      },
+      {
+        source: "/_carrier/seele/decide",
+        destination: "https://us.i.posthog.com/decide",
+      },
+    ];
+  },
+  // This is required to support PostHog trailing slash API requests
+  skipTrailingSlashRedirect: true,
 };
 
 export default withSentryConfig(config, {
@@ -46,7 +67,7 @@ export default withSentryConfig(config, {
     deleteSourcemapsAfterUpload: true,
   },
 
-  authToken: process.env.SENTRY_AUTH_TOKEN,
+  authToken: env.SENTRY_AUTH_TOKEN,
 
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/

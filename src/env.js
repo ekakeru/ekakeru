@@ -10,6 +10,7 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
+    PORT: z.preprocess(Number, z.number()).default(3000),
     DATABASE_URL: z.string().url(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
@@ -24,6 +25,8 @@ export const env = createEnv({
     ),
     EKAKERU_AUTH_GOOGLE_CLIENT_ID: z.string(),
     EKAKERU_AUTH_GOOGLE_CLIENT_SECRET: z.string(),
+    SENTRY_AUTH_TOKEN: z.string(),
+    NEXT_RUNTIME: z.enum(["nodejs", "edge"]),
   },
 
   /**
@@ -32,7 +35,7 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_POSTHOG_KEY: z.string(),
   },
 
   /**
@@ -40,6 +43,7 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+    PORT: process.env.PORT,
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
@@ -47,6 +51,9 @@ export const env = createEnv({
     EKAKERU_AUTH_GOOGLE_CLIENT_ID: process.env.EKAKERU_AUTH_GOOGLE_CLIENT_ID,
     EKAKERU_AUTH_GOOGLE_CLIENT_SECRET:
       process.env.EKAKERU_AUTH_GOOGLE_CLIENT_SECRET,
+    NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
+    SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN,
+    NEXT_RUNTIME: process.env.NEXT_RUNTIME,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
