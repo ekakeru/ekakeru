@@ -8,6 +8,13 @@
       "when": 1727163578090,
       "tag": "0000_overconfident_mattie_franklin",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1727768276894,
+      "tag": "0001_add_slug",
+      "breakpoints": true
     }
   ]
 }

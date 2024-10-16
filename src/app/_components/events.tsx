@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { type ListEventsOutput } from "@/server/api/routers/event";
 import type { TimeRange } from "@/server/db/schema";
 import { api } from "@/trpc/react";
 import { TZDate } from "@date-fns/tz";
@@ -75,6 +76,63 @@ function Date({ date, children }: { date: Date; children: React.ReactNode }) {
   return <time dateTime={date.toISOString()}>{children}</time>;
 }
 
+function EventCard({ event }: { event: ListEventsOutput }) {
+  return (
+    <Card key={event.id} className="flex flex-col items-start gap-2 p-4">
+      <h2 className="text-2xl font-bold">{event.name}</h2>
+
+      <div className="flex items-center gap-2">
+        <MdiLocation className="inline-block opacity-50" />
+        <p>{event.metadata.location}</p>
+      </div>
+
+      <div className="flex items-center gap-2">
+        <MdiTextLong className="inline-block opacity-50" />
+        <p>{event.metadata.description}</p>
+      </div>
+
+      <h3 className="mt-4 text-lg font-bold">抽選申込の結果</h3>
+
+      <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {event.enrollmentRounds.map((round) => (
+          <Card
+            key={round.id}
+            className="flex w-full flex-col items-start gap-1 rounded border p-4"
+          >
+            <div className="flex w-full flex-wrap items-center">
+              <div className="text-lg font-bold">{round.name}</div>
+              <div className="flex-1" />
+              <div className="font-mono text-sm text-muted-foreground">
+                {round.platform}
+              </div>
+            </div>
+
+            <div className="text-sm">
+              <TimeRange timeRange={round.metadata.milestones.enrollment} />
+            </div>
+
+            <div className="mt-2 flex items-center justify-start gap-2">
+              <Button variant="default" asChild>
+                <Link
+                  href={`/events/${event.id}/rounds/${round.id}/submission/create`}
+                >
+                  報告する
+                </Link>
+              </Button>
+
+              <Button variant="secondary" asChild>
+                <Link href={`/events/${event.id}/rounds/${round.id}`}>
+                  結果を見る
+                </Link>
+              </Button>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </Card>
+  );
+}
+
 export function LatestEvents() {
   const [query] = api.event.list.useSuspenseInfiniteQuery(
     {},
@@ -85,62 +143,11 @@ export function LatestEvents() {
   const flattened = query.pages.flatMap((page) => page);
 
   return flattened.length ? (
-    <ul className="flex min-h-[80vh] w-full flex-col gap-6">
+    <div className="flex min-h-[80vh] w-full flex-col gap-6">
       {flattened.map((event) => (
-        <Card key={event.id} className="flex flex-col items-start gap-2 p-4">
-          <h2 className="text-2xl font-bold">{event.name}</h2>
-
-          <div className="flex items-center gap-2">
-            <MdiLocation className="inline-block opacity-50" />
-            <p>{event.metadata.location}</p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <MdiTextLong className="inline-block opacity-50" />
-            <p>{event.metadata.description}</p>
-          </div>
-
-          <h3 className="mt-4 text-lg font-bold">抽選申込の結果</h3>
-
-          <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {event.enrollmentRounds.map((round) => (
-              <Card
-                key={round.id}
-                className="flex w-full flex-col items-start gap-1 rounded border p-4"
-              >
-                <div className="flex w-full flex-wrap items-center">
-                  <div className="text-lg font-bold">{round.name}</div>
-                  <div className="flex-1" />
-                  <div className="text-muted-foreground font-mono text-sm">
-                    {round.platform}
-                  </div>
-                </div>
-
-                <div className="text-sm">
-                  <TimeRange timeRange={round.metadata.milestones.enrollment} />
-                </div>
-
-                <div className="mt-2 flex items-center justify-start gap-2">
-                  <Button variant="default" asChild>
-                    <Link
-                      href={`/events/${event.id}/rounds/${round.id}/submission/create`}
-                    >
-                      報告する
-                    </Link>
-                  </Button>
-
-                  <Button variant="secondary" asChild>
-                    <Link href={`/events/${event.id}/rounds/${round.id}`}>
-                      結果を見る
-                    </Link>
-                  </Button>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </Card>
+        <EventCard key={event.id} event={event} />
       ))}
-    </ul>
+    </div>
   ) : (
     <p>ただいま、イベントはありません。</p>
   );

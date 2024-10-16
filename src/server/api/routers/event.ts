@@ -4,7 +4,7 @@ import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { eventEnrollmentRounds, events } from "@/server/db/schema";
 import { asc, desc, eq, gt, lt } from "drizzle-orm";
 
-type ListEventsOutput = typeof events.$inferSelect & {
+export type ListEventsOutput = typeof events.$inferSelect & {
   enrollmentRounds: (typeof eventEnrollmentRounds.$inferSelect)[];
 };
 

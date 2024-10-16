@@ -1,5 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
+dotenv.config({ path: ".env.local" });
 
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
@@ -26,7 +27,6 @@ export const env = createEnv({
     EKAKERU_AUTH_GOOGLE_CLIENT_ID: z.string(),
     EKAKERU_AUTH_GOOGLE_CLIENT_SECRET: z.string(),
     SENTRY_AUTH_TOKEN: z.string(),
-    NEXT_RUNTIME: z.enum(["nodejs", "edge"]),
   },
 
   /**
@@ -53,7 +53,6 @@ export const env = createEnv({
       process.env.EKAKERU_AUTH_GOOGLE_CLIENT_SECRET,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
     SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN,
-    NEXT_RUNTIME: process.env.NEXT_RUNTIME,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

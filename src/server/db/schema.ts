@@ -9,6 +9,7 @@ import {
   primaryKey,
   text,
   timestamp,
+  uniqueIndex,
   varchar,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
@@ -34,16 +35,23 @@ export type EventMetadata = {
   externalUrl: string;
 };
 
-export const events = createTable("events", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => createId("evt")),
-  createdById: text("created_by_id")
-    .references(() => users.id, { onDelete: "no action" })
-    .notNull(),
-  name: text("name").notNull(),
-  metadata: jsonb("metadata").$type<EventMetadata>().notNull(),
-});
+export const events = createTable(
+  "events",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => createId("evt")),
+    createdById: text("created_by_id")
+      .references(() => users.id, { onDelete: "no action" })
+      .notNull(),
+    slug: text("slug"),
+    name: text("name").notNull(),
+    metadata: jsonb("metadata").$type<EventMetadata>().notNull(),
+  },
+  (table) => ({
+    slugIdx: uniqueIndex("ekakeru_events_slug_udx").on(table.slug),
+  }),
+);
 
 export type TimeRange = {
   start: string;
@@ -59,21 +67,30 @@ export type EventEnrollmentRoundMetadata = {
   };
 };
 
-export const eventEnrollmentRounds = createTable("event_enrollment_rounds", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => createId("erd")),
-  createdById: text("created_by_id")
-    .references(() => users.id, { onDelete: "no action" })
-    .notNull(),
-  eventId: text("event_id")
-    .references(() => events.id, { onDelete: "no action" })
-    .notNull(),
-  platform: platformEnum("platform").notNull(),
-  name: text("name").notNull(),
+export const eventEnrollmentRounds = createTable(
+  "event_enrollment_rounds",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => createId("erd")),
+    createdById: text("created_by_id")
+      .references(() => users.id, { onDelete: "no action" })
+      .notNull(),
+    eventId: text("event_id")
+      .references(() => events.id, { onDelete: "no action" })
+      .notNull(),
+    slug: text("slug"),
+    platform: platformEnum("platform").notNull(),
+    name: text("name").notNull(),
 
-  metadata: jsonb("metadata").$type<EventEnrollmentRoundMetadata>().notNull(),
-});
+    metadata: jsonb("metadata").$type<EventEnrollmentRoundMetadata>().notNull(),
+  },
+  (table) => ({
+    slugIdx: uniqueIndex("ekakeru_event_enrollment_rounds_slug_udx").on(
+      table.slug,
+    ),
+  }),
+);
 
 export const submissions = createTable("submissions", {
   id: text("id")

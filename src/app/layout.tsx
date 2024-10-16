@@ -33,7 +33,6 @@ export default async function RootLayout({
             <TRPCReactProvider>
               <SessionProvider session={session}>
                 <PostHogPageView />
-
                 <HydrateClient>{children}</HydrateClient>
               </SessionProvider>
             </TRPCReactProvider>
