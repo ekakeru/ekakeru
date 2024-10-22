@@ -859,9 +859,9 @@
   integrity sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==
 
 "@iconify-json/line-md@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@iconify-json/line-md/-/line-md-1.2.1.tgz#711784afbc76615056da192c6e7228ebbf92cb9d"
-  integrity sha512-XMga2q5PiQ2LrU7K06hfqSYOA+7UFhRwhl52xvPCPAiLmtdfWBeX38nA46mcaLj7sdNo+DK+BJy9iTrzQ0ewNw==
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@iconify-json/line-md/-/line-md-1.2.2.tgz#c11ded2c46b6c8f243cde04724d824ee3843ebc9"
+  integrity sha512-UCYTTO5aARoVbOOPCaomOoXDC8maSolIV8KVDmK9VuzfjpqkMg/vJo/nWaoQPIf310SZjdvAqHvIwsbzr6J+sw==
   dependencies:
     "@iconify/types" "*"
 
