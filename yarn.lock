@@ -3294,12 +3294,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:types-react-dom@19.0.0-rc.1":
-  version: 19.0.0-rc.1
-  resolution: "types-react-dom@npm:19.0.0-rc.1"
+"@types/react-dom@npm:types-react-dom@19.0.0":
+  version: 19.0.0
+  resolution: "types-react-dom@npm:19.0.0"
   dependencies:
     "@types/react": "npm:*"
-  checksum: 10c0/a6b3aea0ad4cd3b08afde28e869b30f4759a84ea8edf549c2e99d38328f07697f21b792842ef352e086e964b3fb947a54746390ae76ca586ae1a913338f94c1e
+  checksum: 10c0/5ea60f0a0a00a8f8b14a5dd0bf39c349bd2f1e9a1b4ce52777fdfc2d2fe03f791f7714b0ef3ab19d38be8ce52633ebd39d226d8f102344efe07d02e9931b62a3
   languageName: node
   linkType: hard
 
@@ -4913,7 +4913,7 @@ __metadata:
     "@types/eslint": "npm:^8.56.10"
     "@types/node": "npm:^20.14.10"
     "@types/react": "npm:types-react@19.0.0-rc.1"
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
+    "@types/react-dom": "npm:types-react-dom@19.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.1.0"
     "@typescript-eslint/parser": "npm:^8.1.0"
     class-variance-authority: "npm:^0.7.0"
