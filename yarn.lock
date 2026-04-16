@@ -4612,35 +4612,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"drizzle-orm@npm:^0.33.0":
-  version: 0.33.0
-  resolution: "drizzle-orm@npm:0.33.0"
+"drizzle-orm@npm:^0.45.0":
+  version: 0.45.2
+  resolution: "drizzle-orm@npm:0.45.2"
   peerDependencies:
     "@aws-sdk/client-rds-data": ">=3"
-    "@cloudflare/workers-types": ">=3"
-    "@electric-sql/pglite": ">=0.1.1"
-    "@libsql/client": "*"
-    "@neondatabase/serverless": ">=0.1"
+    "@cloudflare/workers-types": ">=4"
+    "@electric-sql/pglite": ">=0.2.0"
+    "@libsql/client": ">=0.10.0"
+    "@libsql/client-wasm": ">=0.10.0"
+    "@neondatabase/serverless": ">=0.10.0"
     "@op-engineering/op-sqlite": ">=2"
     "@opentelemetry/api": ^1.4.1
-    "@planetscale/database": ">=1"
+    "@planetscale/database": ">=1.13"
     "@prisma/client": "*"
     "@tidbcloud/serverless": "*"
     "@types/better-sqlite3": "*"
     "@types/pg": "*"
-    "@types/react": ">=18"
     "@types/sql.js": "*"
+    "@upstash/redis": ">=1.34.7"
     "@vercel/postgres": ">=0.8.0"
     "@xata.io/client": "*"
     better-sqlite3: ">=7"
     bun-types: "*"
-    expo-sqlite: ">=13.2.0"
+    expo-sqlite: ">=14.0.0"
+    gel: ">=2"
     knex: "*"
     kysely: "*"
     mysql2: ">=2"
     pg: ">=8"
     postgres: ">=3"
-    react: ">=18"
     sql.js: ">=1"
     sqlite3: ">=5"
   peerDependenciesMeta:
@@ -4651,6 +4652,8 @@ __metadata:
     "@electric-sql/pglite":
       optional: true
     "@libsql/client":
+      optional: true
+    "@libsql/client-wasm":
       optional: true
     "@neondatabase/serverless":
       optional: true
@@ -4668,9 +4671,9 @@ __metadata:
       optional: true
     "@types/pg":
       optional: true
-    "@types/react":
-      optional: true
     "@types/sql.js":
+      optional: true
+    "@upstash/redis":
       optional: true
     "@vercel/postgres":
       optional: true
@@ -4681,6 +4684,8 @@ __metadata:
     bun-types:
       optional: true
     expo-sqlite:
+      optional: true
+    gel:
       optional: true
     knex:
       optional: true
@@ -4694,13 +4699,11 @@ __metadata:
       optional: true
     prisma:
       optional: true
-    react:
-      optional: true
     sql.js:
       optional: true
     sqlite3:
       optional: true
-  checksum: 10c0/62626e355c3962e963a62b3dbeb9279de709a7b00451ee6722b8b05605cf878bb54633f51d536a5df59d43efa1ae39645af7ddb4283bdbe66d9d467aee3d5b2e
+  checksum: 10c0/deb4a0230a79b1ff8c61365808bdb06a78e9e32171625f1c61d791dec445fad5cd9bc4ce2e6175b0ff1be7fb913310b2fd07b94a2cbe8027581b7d99469b8060
   languageName: node
   linkType: hard
 
@@ -4761,7 +4764,7 @@ __metadata:
     date-fns: "npm:^4.1.0"
     dotenv: "npm:^16.4.5"
     drizzle-kit: "npm:^0.24.0"
-    drizzle-orm: "npm:^0.33.0"
+    drizzle-orm: "npm:^0.45.0"
     eslint: "npm:^8.57.0"
     eslint-config-next: "npm:^14.2.4"
     eslint-plugin-drizzle: "npm:^0.2.3"
