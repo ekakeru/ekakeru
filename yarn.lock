@@ -1178,11 +1178,11 @@ __metadata:
   linkType: hard
 
 "@iconify-json/line-md@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@iconify-json/line-md@npm:1.2.1"
+  version: 1.2.16
+  resolution: "@iconify-json/line-md@npm:1.2.16"
   dependencies:
     "@iconify/types": "npm:*"
-  checksum: 10c0/2bfbf14bbeebbd1c34440ae08d54b473d92be876f7304513262e6004553241aeccae7c8c88567dc3c540823d1d8e9b034d5a53392ed2a95da4bce758f948b0f3
+  checksum: 10c0/5afaab4cd0745db2819f67564b18d00a040de003c90c2c62e9ff1a3eb6815b2fd62a9fecee8594ca093b8e841e9a49337f64365b67e868a899890ec1bc4b6c6f
   languageName: node
   linkType: hard
 
